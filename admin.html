@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Amir Store - إدارة التطبيقات</title>
+<style>
+body{font-family:Arial;background:#f4f7fb;margin:0;color:#172033}.wrap{max-width:900px;margin:auto;padding:25px}
+.box{background:#fff;border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 8px 25px #17203312}
+input,textarea,select{width:100%;padding:12px;margin:7px 0 12px;border:1px solid #dbe3ef;border-radius:10px;font-size:15px}
+button{padding:12px 16px;border:0;border-radius:10px;background:#2563eb;color:#fff;cursor:pointer;margin:4px}
+.danger{background:#dc2626}.muted{background:#64748b}
+h1{margin-top:0}.hint{color:#64748b;line-height:1.6}
+pre{white-space:pre-wrap;background:#0f172a;color:#e2e8f0;padding:16px;border-radius:12px;direction:ltr;text-align:left;overflow:auto}
+.item{border:1px solid #e2e8f0;padding:14px;border-radius:12px;margin:10px 0}
+</style></head>
+<body><div class="wrap">
+<div class="box">
+<h1>🛠️ Amir Store — لوحة الإدارة</h1>
+<p class="hint">هذه الصفحة تنشئ ملف <b>apps.json</b>. ارفع الملف الناتج إلى نفس مجلد <b>index.html</b> في GitHub Pages. ملفات APK يجب أن تكون مستضافة برابط عام.</p>
+<input id="name" placeholder="اسم التطبيق">
+<input id="developer" placeholder="اسم المطور">
+<input id="category" placeholder="التصنيف، مثال: ألعاب">
+<input id="version" placeholder="الإصدار، مثال: 1.0.0">
+<input id="icon" placeholder="رابط الأيقونة (مثال: icons/game.png أو رابط عام)">
+<textarea id="description" placeholder="وصف التطبيق"></textarea>
+<input id="apkUrl" placeholder="رابط APK العام">
+<button onclick="add()">➕ إضافة التطبيق</button>
+<button class="muted" onclick="downloadJson()">⬇️ تصدير apps.json</button>
+<button class="danger" onclick="clearAll()">🗑️ مسح القائمة</button>
+</div>
+<div class="box"><h2>التطبيقات الحالية</h2><div id="list"></div></div>
+<div class="box"><h2>طريقة النشر</h2><ol><li>أضف التطبيقات هنا.</li><li>اضغط «تصدير apps.json».</li><li>استبدل apps.json الموجود في مجلد المتجر.</li><li>ارفع الملفات إلى GitHub Pages.</li><li>ضع روابط APK عامة حقيقية لكل تطبيق.</li></ol></div>
+</div>
+<script>
+let apps=JSON.parse(localStorage.getItem("amir_admin_apps")||"[]");
+function add(){
+ const a={id:Date.now(),name:v("name"),developer:v("developer"),category:v("category")||"عام",version:v("version"),icon:v("icon"),description:v("description"),apkUrl:v("apkUrl")};
+ if(!a.name||!a.apkUrl){alert("اكتب اسم التطبيق ورابط APK العام.");return}
+ apps.push(a);save();["name","developer","category","version","icon","description","apkUrl"].forEach(id=>document.getElementById(id).value="");render();
+}
+function v(id){return document.getElementById(id).value.trim()}
+function save(){localStorage.setItem("amir_admin_apps",JSON.stringify(apps))}
+function removeApp(id){apps=apps.filter(a=>a.id!==id);save();render()}
+function render(){document.getElementById("list").innerHTML=apps.length?apps.map(a=>`<div class="item"><b>${esc(a.name)}</b> — ${esc(a.category)}<br><small>${esc(a.apkUrl)}</small><br><button class="danger" onclick="removeApp(${a.id})">حذف</button></div>`).join(""):"لا توجد تطبيقات بعد."}
+function downloadJson(){
+ const blob=new Blob([JSON.stringify(apps,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="apps.json";a.click();URL.revokeObjectURL(a.href);
+}
+function clearAll(){if(confirm("مسح كل التطبيقات؟")){apps=[];save();render()}}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+render();
+</script></body></html>
