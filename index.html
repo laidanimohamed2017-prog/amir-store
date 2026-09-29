@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Amir Store</title>
+<meta name="description" content="Amir Store - متجر التطبيقات والألعاب">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:28px 16px}
+.wrap{max-width:1100px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}
+h1{margin:0;font-size:32px}.tag{opacity:.9;margin-top:7px}
+.search{margin-top:20px;width:100%;padding:15px;border:0;border-radius:14px;font-size:16px;outline:0}
+.cats{display:flex;gap:8px;overflow:auto;padding:16px 0}.cat{border:0;padding:10px 15px;border-radius:20px;background:#e8eef9;cursor:pointer;white-space:nowrap}
+.cat.active{background:#2563eb;color:#fff}.status{margin:8px 0 18px;color:#64748b}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;padding-bottom:35px}
+.card{background:#fff;border-radius:20px;padding:18px;box-shadow:0 8px 25px #17203312}
+.icon{width:72px;height:72px;border-radius:17px;object-fit:cover;background:#e8eef9}.name{font-size:20px;font-weight:bold;margin:12px 0 5px}.dev{color:#64748b;font-size:14px}
+.desc{color:#475569;line-height:1.6;min-height:50px}.meta{font-size:13px;color:#64748b;margin:10px 0}
+.download{display:block;text-align:center;text-decoration:none;background:#2563eb;color:#fff;padding:12px;border-radius:12px;font-weight:bold}
+.download.disabled{background:#cbd5e1;pointer-events:none}.empty{text-align:center;padding:60px 10px;color:#64748b}
+footer{text-align:center;color:#64748b;padding:25px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="top"><div><h1>📱 Amir Store</h1><div class="tag">متجر التطبيقات والألعاب</div></div></div>
+<input id="search" class="search" placeholder="🔎 ابحث عن تطبيق أو لعبة...">
+</div></header>
+<main class="wrap">
+<div id="cats" class="cats"></div>
+<div id="status" class="status">جاري تحميل التطبيقات...</div>
+<div id="grid" class="grid"></div>
+</main>
+<footer>© 2026 Amir Store</footer>
+<script>
+let apps=[], active="الكل";
+const grid=document.getElementById("grid"), cats=document.getElementById("cats"), search=document.getElementById("search"), status=document.getElementById("status");
+const fallbackIcon="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="120" height="120" rx="25" fill="#2563eb"/><text x="60" y="73" text-anchor="middle" font-size="48" fill="white">A</text></svg>');
+async function load(){
+ try{
+  const r=await fetch("apps.json?"+Date.now(),{cache:"no-store"});
+  if(!r.ok) throw new Error();
+  apps=await r.json();
+ }catch(e){apps=[]}
+ renderCats(); render();
+}
+function renderCats(){
+ const list=["الكل",...new Set(apps.map(a=>a.category).filter(Boolean))];
+ cats.innerHTML=list.map(c=>`<button class="cat ${c===active?"active":""}" onclick="setCat(${JSON.stringify(c)})">${esc(c)}</button>`).join("");
+}
+function setCat(c){active=c;renderCats();render()}
+function render(){
+ const q=search.value.trim().toLowerCase();
+ const shown=apps.filter(a=>(active==="الكل"||a.category===active)&&
+ (!q||[a.name,a.developer,a.description,a.category].join(" ").toLowerCase().includes(q)));
+ status.textContent=`${shown.length} تطبيق`;
+ if(!shown.length){grid.innerHTML='<div class="empty">لا توجد تطبيقات مطابقة حالياً.</div>';return}
+ grid.innerHTML=shown.map(a=>`<article class="card">
+ <img class="icon" src="${safe(a.icon)||fallbackIcon}" onerror="this.src='${fallbackIcon}'">
+ <div class="name">${esc(a.name||"بدون اسم")}</div>
+ <div class="dev">${esc(a.developer||"مطور غير معروف")}</div>
+ <div class="desc">${esc(a.description||"لا يوجد وصف.")}</div>
+ <div class="meta">الإصدار: ${esc(a.version||"-")} · ${esc(a.category||"عام")}</div>
+ ${a.apkUrl?`<a class="download" href="${safe(a.apkUrl)}" target="_blank" rel="noopener">⬇️ تحميل APK</a>`:'<span class="download disabled">الرابط غير متوفر</span>'}
+ </article>`).join("");
+}
+search.addEventListener("input",render);
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function safe(v){return String(v||"").replace(/["']/g,"")}
+load();
+</script>
+</body></html>
