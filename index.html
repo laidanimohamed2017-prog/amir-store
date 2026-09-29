@@ -1,73 +1,812 @@
-<!doctype html>
+```html
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Amir Store</title>
-<meta name="description" content="Amir Store - متجر التطبيقات والألعاب">
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
-header{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:28px 16px}
-.wrap{max-width:1100px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}
-h1{margin:0;font-size:32px}.tag{opacity:.9;margin-top:7px}
-.search{margin-top:20px;width:100%;padding:15px;border:0;border-radius:14px;font-size:16px;outline:0}
-.cats{display:flex;gap:8px;overflow:auto;padding:16px 0}.cat{border:0;padding:10px 15px;border-radius:20px;background:#e8eef9;cursor:pointer;white-space:nowrap}
-.cat.active{background:#2563eb;color:#fff}.status{margin:8px 0 18px;color:#64748b}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;padding-bottom:35px}
-.card{background:#fff;border-radius:20px;padding:18px;box-shadow:0 8px 25px #17203312}
-.icon{width:72px;height:72px;border-radius:17px;object-fit:cover;background:#e8eef9}.name{font-size:20px;font-weight:bold;margin:12px 0 5px}.dev{color:#64748b;font-size:14px}
-.desc{color:#475569;line-height:1.6;min-height:50px}.meta{font-size:13px;color:#64748b;margin:10px 0}
-.download{display:block;text-align:center;text-decoration:none;background:#2563eb;color:#fff;padding:12px;border-radius:12px;font-weight:bold}
-.download.disabled{background:#cbd5e1;pointer-events:none}.empty{text-align:center;padding:60px 10px;color:#64748b}
-footer{text-align:center;color:#64748b;padding:25px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>أمير مواقيت | مواقيت الصلاة</title>
+  <meta name="description" content="أمير مواقيت - مواقيت الصلاة، الصلاة القادمة، اتجاه القبلة والتاريخ.">
+  <meta name="theme-color" content="#07111f">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      min-height: 100vh;
+      color: white;
+      background:
+        radial-gradient(circle at top right, #174b55 0%, transparent 35%),
+        radial-gradient(circle at bottom left, #123c30 0%, transparent 35%),
+        linear-gradient(135deg, #040b14, #0a1d2d 55%, #06131e);
+    }
+
+    .container {
+      width: min(1050px, 94%);
+      margin: auto;
+      padding: 22px 0 35px;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #43e29a;
+    }
+
+    .subtitle {
+      color: #91a7b7;
+      margin-top: 5px;
+      font-size: 13px;
+    }
+
+    select {
+      background: #102b40;
+      color: white;
+      border: 1px solid #29516a;
+      border-radius: 14px;
+      padding: 12px 17px;
+      font-size: 15px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      margin-top: 25px;
+      padding: 30px 20px;
+      text-align: center;
+      border-radius: 30px;
+      background: rgba(8, 28, 43, 0.82);
+      border: 1px solid #23455b;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+      backdrop-filter: blur(12px);
+    }
+
+    .city {
+      color: #58e8a1;
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .clock {
+      font-size: clamp(45px, 9vw, 72px);
+      font-weight: 900;
+      margin: 8px 0;
+      direction: ltr;
+      letter-spacing: 2px;
+    }
+
+    .date {
+      color: #a6b8c4;
+      font-size: 15px;
+    }
+
+    .next-prayer {
+      margin: 22px auto 0;
+      max-width: 600px;
+      padding: 17px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0c3b2b, #0c2d31);
+      border: 1px solid #246d50;
+      font-size: 17px;
+    }
+
+    .next-prayer strong {
+      color: #59e69f;
+    }
+
+    /* PRAYER CARDS */
+    .prayers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 18px;
+    }
+
+    .prayer {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(10, 31, 47, .9);
+      border: 1px solid #1d3d52;
+      transition: .25s;
+    }
+
+    .prayer:hover {
+      transform: translateY(-3px);
+      border-color: #3fdc96;
+    }
+
+    .prayer.active {
+      background: linear-gradient(145deg, #0d3b2b, #0a2532);
+      border-color: #48dc98;
+      box-shadow: 0 0 25px rgba(60,220,145,.08);
+    }
+
+    .prayer-name {
+      color: #9eb0bd;
+      font-size: 15px;
+    }
+
+    .prayer-icon {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .prayer-time {
+      margin-top: 7px;
+      font-size: 30px;
+      font-weight: 900;
+      direction: ltr;
+      text-align: right;
+    }
+
+    /* INFO */
+    .info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 18px;
+    }
+
+    .info-card {
+      padding: 24px;
+      border-radius: 23px;
+      background: rgba(10, 31, 47, .9);
+      border: 1px solid #1d3d52;
+    }
+
+    .info-title {
+      color: #58e8a1;
+      font-size: 17px;
+      font-weight: bold;
+      margin-bottom: 13px;
+    }
+
+    .qibla-arrow {
+      font-size: 58px;
+      margin: 5px 0;
+      text-align: center;
+    }
+
+    .qibla-text,
+    .hijri-text {
+      color: #c0ccd4;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      color: #718592;
+      font-size: 13px;
+      margin-top: 30px;
+      line-height: 2;
+    }
+
+    footer strong {
+      color: #43d995;
+    }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+      .prayers {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .info {
+        grid-template-columns: 1fr;
+      }
+
+      .logo {
+        font-size: 25px;
+      }
+
+      header {
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .container {
+        width: 92%;
+      }
+
+      .prayer {
+        padding: 17px;
+      }
+
+      .prayer-time {
+        font-size: 25px;
+      }
+
+      .hero {
+        padding: 25px 15px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header><div class="wrap">
-<div class="top"><div><h1>📱 Amir Store</h1><div class="tag">متجر التطبيقات والألعاب</div></div></div>
-<input id="search" class="search" placeholder="🔎 ابحث عن تطبيق أو لعبة...">
-</div></header>
-<main class="wrap">
-<div id="cats" class="cats"></div>
-<div id="status" class="status">جاري تحميل التطبيقات...</div>
-<div id="grid" class="grid"></div>
-</main>
-<footer>© 2026 Amir Store</footer>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+
+    <div>
+      <div class="logo">
+        🕌 أمير <span>مواقيت</span>
+      </div>
+
+      <div class="subtitle">
+        صلاتك في وقتها، أينما كنت
+      </div>
+    </div>
+
+    <select id="citySelect">
+      <option value="Algiers">الجزائر العاصمة</option>
+      <option value="Oran">وهران</option>
+      <option value="Constantine">قسنطينة</option>
+      <option value="Annaba">عنابة</option>
+      <option value="Blida">البليدة</option>
+      <option value="Setif">سطيف</option>
+      <option value="Tlemcen">تلمسان</option>
+    </select>
+
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="city" id="cityName">
+      الجزائر العاصمة 🇩🇿
+    </div>
+
+    <div class="clock" id="clock">
+      00:00:00
+    </div>
+
+    <div class="date" id="date">
+      جاري تحميل التاريخ...
+    </div>
+
+    <div class="next-prayer" id="nextPrayer">
+      جاري حساب الصلاة القادمة...
+    </div>
+
+  </section>
+
+
+  <!-- PRAYER TIMES -->
+  <section class="prayers" id="prayers">
+  </section>
+
+
+  <!-- INFO -->
+  <section class="info">
+
+    <div class="info-card">
+
+      <div class="info-title">
+        🕋 اتجاه القبلة
+      </div>
+
+      <div class="qibla-arrow">
+        ↙️
+      </div>
+
+      <div class="qibla-text" id="qiblaText">
+        اتجاه القبلة: 113°
+      </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-title">
+        📅 التاريخ الهجري
+      </div>
+
+      <div class="hijri-text" id="hijriDate">
+        جاري حساب التاريخ الهجري...
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <strong>أمير مواقيت</strong> © 2026
+    <br>
+    جزء من مشروع <strong>Amir Store</strong>
+    <br>
+    🤲 اللهم تقبل منا ومنكم
+  </footer>
+
+</div>
+
+
 <script>
-let apps=[], active="الكل";
-const grid=document.getElementById("grid"), cats=document.getElementById("cats"), search=document.getElementById("search"), status=document.getElementById("status");
-const fallbackIcon="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="120" height="120" rx="25" fill="#2563eb"/><text x="60" y="73" text-anchor="middle" font-size="48" fill="white">A</text></svg>');
-async function load(){
- try{
-  const r=await fetch("apps.json?"+Date.now(),{cache:"no-store"});
-  if(!r.ok) throw new Error();
-  apps=await r.json();
- }catch(e){apps=[]}
- renderCats(); render();
-}
-function renderCats(){
- const list=["الكل",...new Set(apps.map(a=>a.category).filter(Boolean))];
- cats.innerHTML=list.map(c=>`<button class="cat ${c===active?"active":""}" onclick="setCat(${JSON.stringify(c)})">${esc(c)}</button>`).join("");
-}
-function setCat(c){active=c;renderCats();render()}
-function render(){
- const q=search.value.trim().toLowerCase();
- const shown=apps.filter(a=>(active==="الكل"||a.category===active)&&
- (!q||[a.name,a.developer,a.description,a.category].join(" ").toLowerCase().includes(q)));
- status.textContent=`${shown.length} تطبيق`;
- if(!shown.length){grid.innerHTML='<div class="empty">لا توجد تطبيقات مطابقة حالياً.</div>';return}
- grid.innerHTML=shown.map(a=>`<article class="card">
- <img class="icon" src="${safe(a.icon)||fallbackIcon}" onerror="this.src='${fallbackIcon}'">
- <div class="name">${esc(a.name||"بدون اسم")}</div>
- <div class="dev">${esc(a.developer||"مطور غير معروف")}</div>
- <div class="desc">${esc(a.description||"لا يوجد وصف.")}</div>
- <div class="meta">الإصدار: ${esc(a.version||"-")} · ${esc(a.category||"عام")}</div>
- ${a.apkUrl?`<a class="download" href="${safe(a.apkUrl)}" target="_blank" rel="noopener">⬇️ تحميل APK</a>`:'<span class="download disabled">الرابط غير متوفر</span>'}
- </article>`).join("");
-}
-search.addEventListener("input",render);
-function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-function safe(v){return String(v||"").replace(/["']/g,"")}
-load();
+
+  /*
+    بيانات المدن
+    ملاحظة:
+    هذه أوقات تجريبية للنسخة الأولى.
+    يمكن لاحقاً ربط التطبيق بمصدر مواقيت حقيقي.
+  */
+
+  const cities = {
+
+    Algiers: {
+      name: "الجزائر العاصمة 🇩🇿",
+      qibla: 113,
+      times: {
+        "الفجر": "05:10",
+        "الشروق": "06:42",
+        "الظهر": "12:39",
+        "العصر": "16:10",
+        "المغرب": "19:18",
+        "العشاء": "20:42"
+      }
+    },
+
+    Oran: {
+      name: "وهران 🇩🇿",
+      qibla: 116,
+      times: {
+        "الفجر": "05:25",
+        "الشروق": "06:57",
+        "الظهر": "12:53",
+        "العصر": "16:24",
+        "المغرب": "19:32",
+        "العشاء": "20:56"
+      }
+    },
+
+    Constantine: {
+      name: "قسنطينة 🇩🇿",
+      qibla: 112,
+      times: {
+        "الفجر": "05:00",
+        "الشروق": "06:32",
+        "الظهر": "12:29",
+        "العصر": "16:00",
+        "المغرب": "19:08",
+        "العشاء": "20:32"
+      }
+    },
+
+    Annaba: {
+      name: "عنابة 🇩🇿",
+      qibla: 111,
+      times: {
+        "الفجر": "04:54",
+        "الشروق": "06:26",
+        "الظهر": "12:23",
+        "العصر": "15:54",
+        "المغرب": "19:02",
+        "العشاء": "20:26"
+      }
+    },
+
+    Blida: {
+      name: "البليدة 🇩🇿",
+      qibla: 113,
+      times: {
+        "الفجر": "05:11",
+        "الشروق": "06:43",
+        "الظهر": "12:40",
+        "العصر": "16:11",
+        "المغرب": "19:19",
+        "العشاء": "20:43"
+      }
+    },
+
+    Setif: {
+      name: "سطيف 🇩🇿",
+      qibla: 112,
+      times: {
+        "الفجر": "05:03",
+        "الشروق": "06:35",
+        "الظهر": "12:32",
+        "العصر": "16:03",
+        "المغرب": "19:11",
+        "العشاء": "20:35"
+      }
+    },
+
+    Tlemcen: {
+      name: "تلمسان 🇩🇿",
+      qibla: 117,
+      times: {
+        "الفجر": "05:29",
+        "الشروق": "07:01",
+        "الظهر": "12:57",
+        "العصر": "16:28",
+        "المغرب": "19:36",
+        "العشاء": "21:00"
+      }
+    }
+
+  };
+
+
+  const icons = {
+    "الفجر": "🌙",
+    "الشروق": "🌅",
+    "الظهر": "☀️",
+    "العصر": "🌤️",
+    "المغرب": "🌇",
+    "العشاء": "🌙"
+  };
+
+
+  let selectedCity = "Algiers";
+
+
+  const citySelect = document.getElementById("citySelect");
+  const cityName = document.getElementById("cityName");
+  const prayers = document.getElementById("prayers");
+  const clock = document.getElementById("clock");
+  const date = document.getElementById("date");
+  const nextPrayer = document.getElementById("nextPrayer");
+  const qiblaText = document.getElementById("qiblaText");
+  const hijriDate = document.getElementById("hijriDate");
+
+
+  /*
+    عرض المواقيت
+  */
+
+  function renderPrayerTimes() {
+
+    const city = cities[selectedCity];
+
+    cityName.textContent = city.name;
+
+    qiblaText.textContent =
+      "اتجاه القبلة من هذه المدينة: " +
+      city.qibla +
+      "°";
+
+
+    prayers.innerHTML = "";
+
+
+    for (const prayerName in city.times) {
+
+      const card = document.createElement("div");
+
+      card.className = "prayer";
+
+      card.dataset.time = city.times[prayerName];
+
+      card.innerHTML = `
+        <div class="prayer-icon">
+          ${icons[prayerName]}
+        </div>
+
+        <div class="prayer-name">
+          ${prayerName}
+        </div>
+
+        <div class="prayer-time">
+          ${city.times[prayerName]}
+        </div>
+      `;
+
+      prayers.appendChild(card);
+    }
+
+    updateNextPrayer();
+  }
+
+
+  /*
+    تحويل الوقت إلى دقائق
+  */
+
+  function timeToMinutes(time) {
+
+    const parts = time.split(":");
+
+    return (
+      parseInt(parts[0]) * 60 +
+      parseInt(parts[1])
+    );
+
+  }
+
+
+  /*
+    تحديد الصلاة القادمة
+  */
+
+  function updateNextPrayer() {
+
+    const city = cities[selectedCity];
+
+    const now = new Date();
+
+    const currentMinutes =
+      now.getHours() * 60 +
+      now.getMinutes();
+
+
+    const prayerNames =
+      Object.keys(city.times);
+
+
+    let nextIndex = -1;
+
+
+    for (let i = 0; i < prayerNames.length; i++) {
+
+      const prayerTime =
+        timeToMinutes(city.times[prayerNames[i]]);
+
+      if (prayerTime > currentMinutes) {
+
+        nextIndex = i;
+
+        break;
+      }
+
+    }
+
+
+    /*
+      إذا انتهت كل الصلوات،
+      فالصلاة القادمة هي فجر الغد.
+    */
+
+    if (nextIndex === -1) {
+      nextIndex = 0;
+    }
+
+
+    const nextName =
+      prayerNames[nextIndex];
+
+    const nextTime =
+      city.times[nextName];
+
+
+    /*
+      إزالة التحديد السابق
+    */
+
+    document
+      .querySelectorAll(".prayer")
+      .forEach(card => {
+        card.classList.remove("active");
+      });
+
+
+    /*
+      تحديد الصلاة القادمة
+    */
+
+    const cards =
+      document.querySelectorAll(".prayer");
+
+    if (cards[nextIndex]) {
+      cards[nextIndex].classList.add("active");
+    }
+
+
+    /*
+      حساب الوقت المتبقي
+    */
+
+    let [hours, minutes] =
+      nextTime.split(":").map(Number);
+
+
+    let target = new Date();
+
+    target.setHours(
+      hours,
+      minutes,
+      0,
+      0
+    );
+
+
+    if (target <= now) {
+      target.setDate(
+        target.getDate() + 1
+      );
+    }
+
+
+    const difference =
+      target.getTime() - now.getTime();
+
+
+    const h =
+      Math.floor(
+        difference / 3600000
+      );
+
+
+    const m =
+      Math.floor(
+        (difference % 3600000) / 60000
+      );
+
+
+    const s =
+      Math.floor(
+        (difference % 60000) / 1000
+      );
+
+
+    nextPrayer.innerHTML = `
+      الصلاة القادمة:
+      <strong>${nextName}</strong>
+      — الساعة
+      <strong>${nextTime}</strong>
+      <br>
+      متبقي:
+      <strong>
+        ${h} ساعة ${m} دقيقة ${s} ثانية
+      </strong>
+    `;
+
+  }
+
+
+  /*
+    تحديث الساعة
+  */
+
+  function updateClock() {
+
+    const now = new Date();
+
+
+    const hours =
+      String(now.getHours()).padStart(2, "0");
+
+    const minutes =
+      String(now.getMinutes()).padStart(2, "0");
+
+    const seconds =
+      String(now.getSeconds()).padStart(2, "0");
+
+
+    clock.textContent =
+      `${hours}:${minutes}:${seconds}`;
+
+
+    date.textContent =
+      now.toLocaleDateString(
+        "ar-DZ",
+        {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        }
+      );
+
+
+    /*
+      التاريخ الهجري
+    */
+
+    try {
+
+      const hijri =
+        new Intl.DateTimeFormat(
+          "ar-SA-u-ca-islamic",
+          {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+          }
+        ).format(now);
+
+
+      hijriDate.textContent =
+        hijri;
+
+    } catch (error) {
+
+      hijriDate.textContent =
+        "التاريخ الهجري غير متاح على هذا الجهاز";
+
+    }
+
+
+    updateNextPrayer();
+
+  }
+
+
+  /*
+    تغيير المدينة
+  */
+
+  citySelect.addEventListener(
+    "change",
+    function() {
+
+      selectedCity =
+        this.value;
+
+      localStorage.setItem(
+        "amirCity",
+        selectedCity
+      );
+
+      renderPrayerTimes();
+
+    }
+  );
+
+
+  /*
+    استرجاع المدينة المحفوظة
+  */
+
+  const savedCity =
+    localStorage.getItem("amirCity");
+
+
+  if (
+    savedCity &&
+    cities[savedCity]
+  ) {
+
+    selectedCity =
+      savedCity;
+
+    citySelect.value =
+      savedCity;
+
+  }
+
+
+  /*
+    تشغيل التطبيق
+  */
+
+  renderPrayerTimes();
+
+  updateClock();
+
+  setInterval(
+    updateClock,
+    1000
+  );
+
 </script>
-</body></html>
+
+</body>
+</html>
+```
