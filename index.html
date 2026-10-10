@@ -1356,6 +1356,84 @@
     updateCategoryFilter();
     renderApps();
   </script>
+<script type="module">
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBsjL_DFEFIGzgA32RRExNAuL5NyFLVM",
+  authDomain: "amir-store-92a8e.firebaseapp.com",
+  projectId: "amir-store-92a8e",
+  storageBucket: "amir-store-92a8e.firebasestorage.app",
+  messagingSenderId: "975117448475",
+  appId: "1:975117448475:web:eaaf24628be9d783854fbe",
+  measurementId: "G-E24BFYFL89"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+const box = document.createElement("div");
+box.style.cssText =
+  "position:fixed;top:15px;left:15px;z-index:99999;" +
+  "background:white;padding:12px;border-radius:12px;" +
+  "box-shadow:0 2px 15px #0002;display:flex;gap:8px;" +
+  "align-items:center;max-width:95vw;";
+
+const login = document.createElement("button");
+login.textContent = "تسجيل الدخول باستخدام Google";
+login.style.cssText =
+  "padding:10px 14px;border:0;border-radius:8px;" +
+  "background:#6558e8;color:white;cursor:pointer;";
+
+const status = document.createElement("span");
+status.textContent = "غير مسجل الدخول";
+status.style.cssText = "font-size:12px;";
+
+const logout = document.createElement("button");
+logout.textContent = "خروج";
+logout.style.cssText =
+  "padding:8px;border:1px solid #ddd;border-radius:8px;";
+
+box.append(login, status, logout);
+document.body.appendChild(box);
+
+login.onclick = async () => {
+  login.disabled = true;
+  try {
+    await signInWithPopup(auth, provider);
+  } catch (error) {
+    alert("تعذر تسجيل الدخول: " + error.message);
+  } finally {
+    login.disabled = false;
+  }
+};
+
+logout.onclick = async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    alert("تعذر تسجيل الخروج: " + error.message);
+  }
+};
+
+onAuthStateChanged(auth, user => {
+  status.textContent = user
+    ? "مرحبًا، " + (user.displayName || user.email)
+    : "غير مسجل الدخول";
+
+  login.hidden = !!user;
+  logout.hidden = !user;
+});
+</script>
 </body>
 </html>
