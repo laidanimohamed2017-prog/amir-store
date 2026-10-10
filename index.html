@@ -1,200 +1,759 @@
-```html
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Amir Store | متجر أمير</title>
-  <meta name="description" content="Amir Store - متجر التطبيقات والألعاب من أمير">
+  <title>Amir Store | متجر أمير للتطبيقات والألعاب</title>
+  <meta name="description" content="اكتشف Amir Store، متجر أمير للتطبيقات والألعاب. جرّب أمير مواقيت وتعرّف على تطبيقات مفيدة وسهلة الاستخدام.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#071810">
+  <meta name="author" content="Amir Store">
+
+  <link rel="canonical" href="https://laidanimohamed2017-prog.github.io/amir-store/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_DZ">
+  <meta property="og:site_name" content="Amir Store">
+  <meta property="og:title" content="Amir Store | متجر أمير">
+  <meta property="og:description" content="متجر أمير للتطبيقات والألعاب. اكتشف تطبيقات مفيدة وجديدة.">
+  <meta property="og:url" content="https://laidanimohamed2017-prog.github.io/amir-store/">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Amir Store | متجر أمير">
+  <meta name="twitter:description" content="اكتشف التطبيقات والألعاب من Amir Store.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Amir Store",
+    "alternateName": "متجر أمير",
+    "url": "https://laidanimohamed2017-prog.github.io/amir-store/",
+    "inLanguage": "ar"
+  }
+  </script>
 
   <style>
+    :root {
+      --bg: #071810;
+      --bg-soft: #0b2118;
+      --card: #10291e;
+      --card-hover: #153628;
+      --green: #38e5a0;
+      --green-dark: #0d9a67;
+      --gold: #d8bd79;
+      --text: #f3fbf6;
+      --muted: #a5bdb0;
+      --border: rgba(255,255,255,.10);
+      --radius: 22px;
+      --shadow: 0 18px 45px rgba(0,0,0,.20);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
     body {
       font-family: Arial, Tahoma, sans-serif;
       background:
-        radial-gradient(circle at top, #12352a 0%, #071a12 45%, #020b07 100%);
-      color: white;
+        radial-gradient(ellipse at top, #143a29 0%, transparent 45%),
+        var(--bg);
+      color: var(--text);
       min-height: 100vh;
+      line-height: 1.7;
     }
 
-    header {
-      padding: 35px 20px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+    a {
+      color: inherit;
     }
 
-    .logo {
-      font-size: 42px;
-      font-weight: bold;
-      color: #35e59a;
-      margin-bottom: 10px;
+    button, input, select, textarea {
+      font: inherit;
     }
 
-    .subtitle {
-      color: #b8d7cb;
-      font-size: 17px;
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
     }
 
     .container {
-      width: min(1100px, 92%);
-      margin: 35px auto;
+      width: min(1120px, 92%);
+      margin-inline: auto;
     }
 
-    .welcome {
-      text-align: center;
-      margin-bottom: 35px;
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(7,24,16,.90);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
     }
 
-    .welcome h1 {
-      font-size: 32px;
-      margin-bottom: 12px;
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    .welcome p {
-      color: #a9c8bc;
-      line-height: 1.8;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      min-width: 0;
     }
 
-    .apps-title {
+    .brand-icon {
+      width: 47px;
+      height: 47px;
+      flex: 0 0 47px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #3df0a9, #08734d);
+      color: #062117;
       font-size: 25px;
+      box-shadow: 0 6px 25px rgba(56,229,160,.14);
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .brand-name span {
+      color: var(--green);
+    }
+
+    .brand-caption {
+      color: var(--muted);
+      font-size: 12px;
+      display: block;
+      line-height: 1.4;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    .button {
+      border: 1px solid transparent;
+      border-radius: 13px;
+      padding: 11px 17px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .2s, background .2s, border-color .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #042015;
+      background: linear-gradient(135deg, #50f0b0, #28d991);
+    }
+
+    .button-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,.05);
+      border-color: var(--border);
+    }
+
+    .button-secondary:hover {
+      border-color: rgba(56,229,160,.45);
+      background: rgba(56,229,160,.08);
+    }
+
+    .button-gold {
+      color: #241c0b;
+      background: var(--gold);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 35px;
+      padding: clamp(30px, 6vw, 65px);
+      border: 1px solid rgba(216,189,121,.19);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(56,229,160,.13), transparent 35%),
+        linear-gradient(130deg, #102e20, #0b2017 75%);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "✧";
+      position: absolute;
+      left: 5%;
+      top: 3%;
+      color: rgba(216,189,121,.16);
+      font-size: 150px;
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 17px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      max-width: 740px;
+      font-size: clamp(30px, 5vw, 53px);
+      line-height: 1.3;
+      letter-spacing: -.8px;
       margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      color: var(--green);
+    }
+
+    .hero-description {
+      max-width: 650px;
+      color: #b7cec1;
+      font-size: 17px;
+      line-height: 2;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 27px;
+    }
+
+    .hero-note {
+      margin-top: 25px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .section {
+      padding-top: 60px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(23px, 3vw, 30px);
+      margin-bottom: 5px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-label {
+      display: block;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .search-tools {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 200px;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .field {
+      width: 100%;
+      min-width: 0;
+      color: var(--text);
+      background: rgba(255,255,255,.045);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 13px 15px;
+      outline: none;
+    }
+
+    .field::placeholder {
+      color: #80998b;
+    }
+
+    .field:focus {
+      border-color: rgba(56,229,160,.65);
+    }
+
+    select.field option {
+      background: var(--bg-soft);
+      color: var(--text);
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
     }
 
     .app-card {
       display: flex;
-      align-items: center;
-      gap: 25px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 25px;
-      padding: 25px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-      backdrop-filter: blur(10px);
-      transition: 0.3s;
+      gap: 20px;
+      align-items: flex-start;
+      min-width: 0;
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(19,48,34,.94), rgba(11,31,22,.96));
+      box-shadow: 0 10px 35px rgba(0,0,0,.12);
+      transition: transform .25s, border-color .25s, background .25s;
     }
 
     .app-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(53,229,154,0.5);
+      transform: translateY(-4px);
+      border-color: rgba(56,229,160,.40);
+      background: linear-gradient(145deg, #173c2a, #0d271b);
     }
 
     .app-icon {
-      width: 110px;
-      height: 110px;
-      min-width: 110px;
-      border-radius: 25px;
-      background: linear-gradient(135deg, #35e59a, #087f55);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 55px;
-      box-shadow: 0 10px 25px rgba(53,229,154,0.2);
+      flex: 0 0 82px;
+      width: 82px;
+      height: 82px;
+      display: grid;
+      place-items: center;
+      border-radius: 23px;
+      background: linear-gradient(135deg, #214b36, #102a1d);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 39px;
+      overflow: hidden;
+    }
+
+    .app-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .app-info {
       flex: 1;
+      min-width: 0;
     }
 
-    .app-category {
+    .app-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 9px;
+    }
+
+    .tag {
       display: inline-block;
-      color: #35e59a;
-      font-size: 14px;
-      margin-bottom: 8px;
+      padding: 4px 9px;
+      border-radius: 8px;
+      color: var(--green);
+      background: rgba(56,229,160,.09);
+      font-size: 11px;
+      font-weight: 700;
     }
 
-    .app-info h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
+    .tag-gold {
+      color: var(--gold);
+      background: rgba(216,189,121,.10);
+    }
+
+    .app-info h3 {
+      font-size: 22px;
+      line-height: 1.5;
+      margin-bottom: 7px;
+      overflow-wrap: anywhere;
     }
 
     .app-info p {
-      color: #b7cbc4;
-      line-height: 1.8;
-      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+      margin-bottom: 17px;
+      overflow-wrap: anywhere;
     }
 
-    .buttons {
+    .app-actions {
       display: flex;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .app-actions .button {
+      font-size: 13px;
+      padding: 10px 13px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 38px 20px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+    }
+
+    .empty-state strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .developer-section {
+      margin-top: 65px;
+      padding: 27px;
+      border: 1px solid rgba(216,189,121,.25);
+      border-radius: var(--radius);
+      background: linear-gradient(140deg, rgba(41,37,23,.30), rgba(14,38,26,.7));
+    }
+
+    .developer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
       flex-wrap: wrap;
     }
 
-    .app-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
-      color: #03120c;
-      background: #35e59a;
-      padding: 13px 22px;
-      border-radius: 12px;
-      font-weight: bold;
-      transition: 0.2s;
+    .developer-top h2 {
+      font-size: 22px;
+      margin-bottom: 5px;
     }
 
-    .app-button:hover {
-      transform: scale(1.04);
-      background: #55f2ae;
+    .developer-top p {
+      color: var(--muted);
+      font-size: 13px;
     }
 
-    .secondary-button {
-      background: rgba(255,255,255,0.1);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-
-    .secondary-button:hover {
-      background: rgba(255,255,255,0.17);
-    }
-
-    .coming {
+    .developer-panel {
       margin-top: 25px;
-      padding: 25px;
-      text-align: center;
-      border: 1px dashed rgba(255,255,255,0.15);
-      border-radius: 20px;
-      color: #8da79d;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .notice {
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(216,189,121,.22);
+      background: rgba(216,189,121,.06);
+      color: #e8d8ad;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .form-field {
+      min-width: 0;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 7px;
+      color: #d8e8de;
+    }
+
+    textarea.field {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .developer-help {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .developer-help code {
+      color: var(--green);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .status-message {
+      margin-top: 15px;
+      color: var(--green);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .status-message.error {
+      color: #ffadad;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .about-card {
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255,255,255,.025);
+    }
+
+    .about-icon {
+      font-size: 27px;
+      margin-bottom: 12px;
+    }
+
+    .about-card h3 {
+      font-size: 17px;
+      margin-bottom: 7px;
+    }
+
+    .about-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
     }
 
     footer {
+      margin-top: 75px;
+      padding: 30px 15px;
+      border-top: 1px solid var(--border);
       text-align: center;
-      padding: 40px 20px 25px;
-      color: #718c82;
-      font-size: 14px;
+      color: #819b8c;
+      font-size: 13px;
     }
 
-    @media (max-width: 650px) {
-      header {
-        padding: 25px 15px;
+    footer strong {
+      color: var(--green);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 13px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--green);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 800px) {
+      .nav-links {
+        gap: 12px;
       }
 
-      .logo {
-        font-size: 34px;
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-card {
+        padding: 19px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: 92%;
+      }
+
+      .nav {
+        min-height: 68px;
+        gap: 8px;
+      }
+
+      .brand-icon {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+        border-radius: 12px;
+        font-size: 21px;
+      }
+
+      .brand-name {
+        font-size: 18px;
+      }
+
+      .brand-caption {
+        font-size: 10px;
+      }
+
+      .nav-links {
+        gap: 10px;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+      }
+
+      .nav-links .developer-nav {
+        display: none;
+      }
+
+      .hero {
+        margin-top: 20px;
+        padding: 27px 21px;
+        border-radius: 23px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding-top: 43px;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .search-tools {
+        grid-template-columns: 1fr;
       }
 
       .app-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 22px;
+        gap: 13px;
+        padding: 16px;
+        border-radius: 19px;
       }
 
-      .app-info h2 {
-        font-size: 25px;
+      .app-icon {
+        width: 60px;
+        height: 60px;
+        flex-basis: 60px;
+        border-radius: 17px;
+        font-size: 29px;
       }
 
-      .buttons {
-        justify-content: center;
+      .app-info h3 {
+        font-size: 19px;
       }
 
-      .app-button {
+      .app-info p {
+        font-size: 12px;
+      }
+
+      .app-actions .button {
+        flex: 1 1 100%;
+      }
+
+      .developer-section {
+        padding: 18px;
+        margin-top: 45px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-field.full {
+        grid-column: auto;
+      }
+
+      .form-actions .button {
         width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
       }
     }
   </style>
@@ -202,80 +761,601 @@
 
 <body>
 
-  <header>
-    <div class="logo">🛍️ Amir Store</div>
-    <div class="subtitle">متجر أمير للتطبيقات والألعاب</div>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Amir Store الصفحة الرئيسية">
+        <div class="brand-icon" aria-hidden="true">A</div>
+        <div>
+          <div class="brand-name">Amir <span>Store</span></div>
+          <span class="brand-caption">متجر أمير للتطبيقات</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="القائمة الرئيسية">
+        <a href="#apps">التطبيقات</a>
+        <a href="#about">عن المتجر</a>
+        <a href="#developers" class="developer-nav">للمطورين</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="container">
+  <main class="container" id="home">
 
-    <section class="welcome">
-      <h1>مرحبًا بك في Amir Store 👋</h1>
-      <p>
-        اكتشف تطبيقات وألعابًا من تطوير أمير،
-        واستمتع بتجربة بسيطة وسريعة.
+    <section class="hero">
+      <div class="eyebrow">اكتشف عالم أمير الرقمي</div>
+
+      <h1>
+        تطبيقات مفيدة،<br>
+        وتجربة أبسط مع <span>Amir Store</span>
+      </h1>
+
+      <p class="hero-description">
+        مرحبًا بك في متجر أمير، وجهتك لاكتشاف التطبيقات
+        والأدوات الرقمية من تطوير أمير. ابدأ بتجربة أمير مواقيت،
+        وتابع جديد التطبيقات التي نضيفها باستمرار.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button button-primary" href="#apps">
+          استكشف التطبيقات <span aria-hidden="true">←</span>
+        </a>
+
+        <a class="button button-secondary"
+           href="https://laidanimohamed2017-prog.github.io/amir-mawaqit/"
+           target="_blank" rel="noopener noreferrer">
+          🕌 جرّب أمير مواقيت
+        </a>
+      </div>
+
+      <p class="hero-note">
+        ✦ تطبيقات واضحة، روابط مباشرة، وتصميم مناسب للهاتف والحاسوب.
       </p>
     </section>
 
-    <h2 class="apps-title">📱 التطبيقات</h2>
-
-    <section class="app-card">
-
-      <div class="app-icon">🕌</div>
-
-      <div class="app-info">
-
-        <span class="app-category">تطبيق إسلامي</span>
-
-        <h2>أمير مواقيت</h2>
-
-        <p>
-          مواقيت الصلاة حسب موقعك، اتجاه القبلة،
-          التاريخ الهجري والعد التنازلي للصلاة القادمة.
-        </p>
-
-        <div class="buttons">
-
-          <a
-            href="https://laidanimohamed2017-prog.github.io/amir-mawaqit/"
-            class="app-button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            فتح التطبيق ↗
-          </a>
-
-          <a
-            href="https://laidanimohamed2017-prog.github.io/amir-mawaqit/"
-            class="app-button secondary-button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            📲 تثبيت التطبيق
-          </a>
-
+    <section class="section" id="apps">
+      <div class="section-heading">
+        <div>
+          <span class="section-label">مكتبة أمير</span>
+          <h2>التطبيقات المتاحة</h2>
+          <p>اكتشف التطبيقات المتوفرة في المتجر.</p>
         </div>
 
+        <span class="tag tag-gold" id="appCount">تطبيق واحد</span>
       </div>
 
+      <div class="search-tools">
+        <input
+          id="searchInput"
+          class="field"
+          type="search"
+          placeholder="ابحث عن تطبيق بالاسم أو الوصف..."
+          aria-label="البحث عن التطبيقات"
+        >
+
+        <select id="categoryFilter" class="field" aria-label="تصفية حسب التصنيف">
+          <option value="all">جميع التصنيفات</option>
+        </select>
+      </div>
+
+      <div class="app-grid" id="appGrid" aria-live="polite"></div>
     </section>
 
-    <div class="coming">
-      🚀 المزيد من التطبيقات والألعاب قريبًا...
-    </div>
+    <section class="section" id="about">
+      <div class="section-heading">
+        <div>
+          <span class="section-label">لماذا أمير ستور؟</span>
+          <h2>متجر يتطور مع الوقت</h2>
+          <p>مساحة مخصصة للتطبيقات والأفكار الرقمية الجديدة.</p>
+        </div>
+      </div>
+
+      <div class="about-grid">
+        <article class="about-card">
+          <div class="about-icon" aria-hidden="true">📱</div>
+          <h3>تصميم متجاوب</h3>
+          <p>واجهة مرنة تناسب الشاشات الصغيرة والكبيرة، وتسهل الوصول إلى التطبيقات.</p>
+        </article>
+
+        <article class="about-card">
+          <div class="about-icon" aria-hidden="true">⚡</div>
+          <h3>وصول مباشر</h3>
+          <p>روابط واضحة تتيح لك فتح التطبيقات المتاحة دون خطوات غير ضرورية.</p>
+        </article>
+
+        <article class="about-card">
+          <div class="about-icon" aria-hidden="true">🌱</div>
+          <h3>قابل للتوسع</h3>
+          <p>يمكن إضافة تطبيقات جديدة وتصنيفات مختلفة مع تطور مشروع أمير الرقمي.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="developer-section" id="developers">
+      <div class="developer-top">
+        <div>
+          <span class="section-label">Developer Zone</span>
+          <h2>منطقة المطورين</h2>
+          <p>أضف تطبيقًا جديدًا إلى قائمة التطبيقات في هذا المتصفح.</p>
+        </div>
+
+        <button id="toggleDeveloper"
+                class="button button-gold"
+                type="button"
+                aria-expanded="false"
+                aria-controls="developerPanel">
+          فتح لوحة المطور
+        </button>
+      </div>
+
+      <div id="developerPanel" class="developer-panel hidden">
+        <div class="notice">
+          <strong>ملاحظة مهمة:</strong>
+          الإضافات من هذه اللوحة تُحفظ محليًا في هذا المتصفح فقط.
+          لكي تظهر التطبيقات لجميع زوار الموقع، يجب نشر بياناتها
+          ضمن ملفات الموقع على GitHub.
+          لا تستخدم هذه اللوحة لتخزين كلمات المرور أو المفاتيح السرية.
+        </div>
+
+        <form id="appForm">
+          <div class="form-grid">
+
+            <div class="form-field">
+              <label for="appName">اسم التطبيق *</label>
+              <input class="field" id="appName" name="appName"
+                     maxlength="70" required
+                     placeholder="مثال: Amir Notes">
+            </div>
+
+            <div class="form-field">
+              <label for="appCategory">التصنيف *</label>
+              <select class="field" id="appCategory" name="appCategory" required>
+                <option value="أدوات">أدوات</option>
+                <option value="إسلامي">إسلامي</option>
+                <option value="ألعاب">ألعاب</option>
+                <option value="تعليم">تعليم</option>
+                <option value="إنتاجية">إنتاجية</option>
+                <option value="ترفيه">ترفيه</option>
+                <option value="أخرى">أخرى</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="appIcon">رمز التطبيق (إيموجي) *</label>
+              <input class="field" id="appIcon" name="appIcon"
+                     maxlength="12" required value="📱"
+                     placeholder="📱">
+            </div>
+
+            <div class="form-field">
+              <label for="appUrl">رابط التطبيق *</label>
+              <input class="field" id="appUrl" name="appUrl"
+                     type="url" maxlength="500" required
+                     placeholder="https://example.com/app/">
+            </div>
+
+            <div class="form-field full">
+              <label for="appDescription">وصف التطبيق *</label>
+              <textarea class="field" id="appDescription"
+                        name="appDescription" maxlength="500"
+                        required placeholder="اكتب وصفًا مختصرًا ومفيدًا للتطبيق..."></textarea>
+            </div>
+
+          </div>
+
+          <div class="form-actions">
+            <button class="button button-primary" type="submit">
+              إضافة التطبيق
+            </button>
+
+            <button class="button button-secondary" id="exportApps"
+                    type="button">
+              تصدير بيانات التطبيقات JSON
+            </button>
+
+            <button class="button button-secondary" id="resetForm"
+                    type="reset">
+              مسح الحقول
+            </button>
+          </div>
+
+          <p id="developerStatus" class="status-message"
+             role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="developer-help">
+          <strong>كيف تنشر تطبيقًا جديدًا لجميع الزوار؟</strong><br>
+          1. أضف بيانات التطبيق من اللوحة وجرب ظهوره.<br>
+          2. صدّر ملف JSON للاحتفاظ ببياناتك أو نقلها.<br>
+          3. أضف بيانات التطبيق إلى مصفوفة <code>DEFAULT_APPS</code>
+          داخل ملف <code>index.html</code>، ثم احفظ التغييرات في GitHub.<br>
+          4. افتح الموقع مجددًا واضغط <code>Ctrl + F5</code> للتحديث.
+        </div>
+      </div>
+    </section>
 
   </main>
 
   <footer>
-    © 2026 Amir Store — جميع الحقوق محفوظة
+    <div class="footer-links">
+      <a href="#home">الرئيسية</a>
+      <a href="#apps">التطبيقات</a>
+      <a href="#about">عن المتجر</a>
+      <a href="#developers">للمطورين</a>
+    </div>
+
+    <p>
+      © <span id="currentYear">2026</span>
+      <strong>Amir Store</strong> — جميع الحقوق محفوظة.
+    </p>
+    <p>صُنع بعناية ضمن مشاريع أمير الرقمية.</p>
   </footer>
+
+  <script>
+    "use strict";
+
+    /*
+      لإضافة تطبيق لجميع الزوار:
+      أضف عنصرًا جديدًا إلى DEFAULT_APPS ثم ارفع index.html إلى GitHub.
+    */
+
+    const DEFAULT_APPS = [
+      {
+        id: "amir-mawaqit",
+        name: "أمير مواقيت",
+        category: "إسلامي",
+        icon: "🕌",
+        description:
+          "تطبيق لمتابعة مواقيت الصلاة، واتجاه القبلة، والتاريخ الهجري، والعد التنازلي للصلاة القادمة.",
+        url: "https://laidanimohamed2017-prog.github.io/amir-mawaqit/",
+        badge: "تطبيق متاح"
+      }
+    ];
+
+    const STORAGE_KEY = "amirStoreLocalAppsV1";
+
+    const appGrid = document.getElementById("appGrid");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const appCount = document.getElementById("appCount");
+    const appForm = document.getElementById("appForm");
+    const developerPanel = document.getElementById("developerPanel");
+    const toggleDeveloper = document.getElementById("toggleDeveloper");
+    const developerStatus = document.getElementById("developerStatus");
+
+    let localApps = loadLocalApps();
+
+    function safeReadJSON(value) {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return null;
+      }
+    }
+
+    function isValidHttpUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === "https:" || url.protocol === "http:";
+      } catch {
+        return false;
+      }
+    }
+
+    function cleanApp(item) {
+      if (!item || typeof item !== "object") return null;
+
+      const name = String(item.name || "").trim().slice(0, 70);
+      const category = String(item.category || "أخرى").trim().slice(0, 40);
+      const icon = String(item.icon || "📱").trim().slice(0, 12);
+      const description = String(item.description || "").trim().slice(0, 500);
+      const url = String(item.url || "").trim().slice(0, 500);
+
+      if (!name || !category || !icon || !description || !isValidHttpUrl(url)) {
+        return null;
+      }
+
+      return {
+        id: String(item.id || "local-" + Date.now()).slice(0, 100),
+        name,
+        category,
+        icon,
+        description,
+        url,
+        badge: String(item.badge || "تطبيق").slice(0, 40)
+      };
+    }
+
+    function loadLocalApps() {
+      try {
+        const saved = safeReadJSON(localStorage.getItem(STORAGE_KEY) || "[]");
+        if (!Array.isArray(saved)) return [];
+
+        return saved.map(cleanApp).filter(Boolean);
+      } catch {
+        return [];
+      }
+    }
+
+    function saveLocalApps() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(localApps));
+        return true;
+      } catch {
+        showStatus(
+          "تعذر الحفظ المحلي. تحقق من إعدادات المتصفح أو مساحة التخزين.",
+          true
+        );
+        return false;
+      }
+    }
+
+    function getAllApps() {
+      return [...DEFAULT_APPS, ...localApps];
+    }
+
+    function showStatus(message, isError = false) {
+      developerStatus.textContent = message;
+      developerStatus.classList.toggle("error", isError);
+    }
+
+    function createElement(tag, className, text) {
+      const element = document.createElement(tag);
+
+      if (className) element.className = className;
+      if (text !== undefined) element.textContent = text;
+
+      return element;
+    }
+
+    function makeButton(text, className, onClick) {
+      const button = createElement("button", "button " + className, text);
+      button.type = "button";
+      button.addEventListener("click", onClick);
+      return button;
+    }
+
+    function updateCategoryFilter() {
+      const selected = categoryFilter.value;
+      const categories = [
+        ...new Set(getAllApps().map(app => app.category))
+      ].sort((a, b) => a.localeCompare(b, "ar"));
+
+      categoryFilter.replaceChildren();
+
+      const allOption = document.createElement("option");
+      allOption.value = "all";
+      allOption.textContent = "جميع التصنيفات";
+      categoryFilter.appendChild(allOption);
+
+      categories.forEach(category => {
+        const option = document.createElement("option");
+        option.value = category;
+        option.textContent = category;
+        categoryFilter.appendChild(option);
+      });
+
+      categoryFilter.value =
+        selected === "all" || categories.includes(selected)
+          ? selected
+          : "all";
+    }
+
+    function renderApps() {
+      const query = searchInput.value.trim().toLocaleLowerCase("ar");
+      const category = categoryFilter.value;
+
+      const filtered = getAllApps().filter(app => {
+        const searchable =
+          (app.name + " " + app.category + " " + app.description)
+          .toLocaleLowerCase("ar");
+
+        const matchesSearch = searchable.includes(query);
+        const matchesCategory =
+          category === "all" || app.category === category;
+
+        return matchesSearch && matchesCategory;
+      });
+
+      appGrid.replaceChildren();
+
+      const count = filtered.length;
+      appCount.textContent = count === 1
+        ? "تطبيق واحد"
+        : count === 2
+          ? "تطبيقان"
+          : count + " تطبيقات";
+
+      if (count === 0) {
+        const empty = createElement("div", "empty-state");
+        empty.appendChild(createElement("strong", "", "لم نعثر على تطبيق"));
+        empty.appendChild(
+          createElement("p", "", "جرّب كلمة أخرى أو اختر تصنيفًا مختلفًا.")
+        );
+        appGrid.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(app => {
+        const card = createElement("article", "app-card");
+        const iconBox = createElement("div", "app-icon");
+        iconBox.setAttribute("aria-hidden", "true");
+        iconBox.textContent = app.icon;
+
+        const info = createElement("div", "app-info");
+        const meta = createElement("div", "app-meta");
+
+        meta.appendChild(createElement("span", "tag", app.category));
+        meta.appendChild(createElement("span", "tag tag-gold", app.badge));
+
+        info.appendChild(meta);
+        info.appendChild(createElement("h3", "", app.name));
+        info.appendChild(createElement("p", "", app.description));
+
+        const actions = createElement("div", "app-actions");
+
+        const openLink = createElement("a", "button button-primary", "فتح التطبيق ↗");
+        openLink.href = app.url;
+        openLink.target = "_blank";
+        openLink.rel = "noopener noreferrer";
+        actions.appendChild(openLink);
+
+        const copyButton = makeButton(
+          "نسخ الرابط",
+          "button-secondary",
+          async () => {
+            try {
+              await navigator.clipboard.writeText(app.url);
+              showStatus("تم نسخ رابط " + app.name + ".");
+            } catch {
+              showStatus(
+                "تعذر النسخ تلقائيًا. يمكنك نسخ الرابط من شريط العنوان.",
+                true
+              );
+            }
+          }
+        );
+
+        actions.appendChild(copyButton);
+
+        const isCustom = localApps.some(localApp => localApp.id === app.id);
+
+        if (isCustom && !developerPanel.classList.contains("hidden")) {
+          const deleteButton = makeButton(
+            "حذف محلي",
+            "button-secondary",
+            () => {
+              const confirmed = window.confirm(
+                "هل تريد حذف " + app.name + " من هذه القائمة المحلية؟"
+              );
+
+              if (!confirmed) return;
+
+              localApps = localApps.filter(item => item.id !== app.id);
+              if (saveLocalApps()) {
+                updateCategoryFilter();
+                renderApps();
+                showStatus("تم حذف التطبيق من هذا المتصفح.");
+              }
+            }
+          );
+
+          actions.appendChild(deleteButton);
+        }
+
+        info.appendChild(actions);
+        card.append(iconBox, info);
+        appGrid.appendChild(card);
+      });
+    }
+
+    toggleDeveloper.addEventListener("click", () => {
+      const willOpen = developerPanel.classList.contains("hidden");
+
+      developerPanel.classList.toggle("hidden", !willOpen);
+      toggleDeveloper.setAttribute("aria-expanded", String(willOpen));
+      toggleDeveloper.textContent = willOpen
+        ? "إغلاق لوحة المطور"
+        : "فتح لوحة المطور";
+
+      renderApps();
+
+      if (willOpen) {
+        developerPanel.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
+    });
+
+    searchInput.addEventListener("input", renderApps);
+    categoryFilter.addEventListener("change", renderApps);
+
+    appForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const name = document.getElementById("appName").value.trim();
+      const category = document.getElementById("appCategory").value;
+      const icon = document.getElementById("appIcon").value.trim();
+      const url = document.getElementById("appUrl").value.trim();
+      const description =
+        document.getElementById("appDescription").value.trim();
+
+      if (!name || !category || !icon || !description || !url) {
+        showStatus("يرجى ملء جميع الحقول المطلوبة.", true);
+        return;
+      }
+
+      if (!isValidHttpUrl(url)) {
+        showStatus("يجب أن يبدأ رابط التطبيق بـ https:// أو http://", true);
+        return;
+      }
+
+      const app = cleanApp({
+        id: "local-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+        name,
+        category,
+        icon,
+        description,
+        url,
+        badge: "إضافة محلية"
+      });
+
+      if (!app) {
+        showStatus("تعذر التحقق من بيانات التطبيق.", true);
+        return;
+      }
+
+      localApps.push(app);
+
+      if (!saveLocalApps()) {
+        localApps = localApps.filter(item => item.id !== app.id);
+        return;
+      }
+
+      updateCategoryFilter();
+      categoryFilter.value = "all";
+      searchInput.value = "";
+      renderApps();
+
+      appForm.reset();
+      document.getElementById("appIcon").value = "📱";
+
+      showStatus(
+        "تمت إضافة " + app.name +
+        " في هذا المتصفح. لنشره للجميع، أضف بياناته إلى DEFAULT_APPS في الكود."
+      );
+
+      appGrid.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    document.getElementById("resetForm").addEventListener("click", () => {
+      showStatus("");
+    });
+
+    document.getElementById("exportApps").addEventListener("click", () => {
+      const data = JSON.stringify(getAllApps(), null, 2);
+      const blob = new Blob([data], {
+        type: "application/json;charset=utf-8"
+      });
+
+      const downloadUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = "amir-store-apps.json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+      showStatus("تم تجهيز ملف JSON للتنزيل والاحتفاظ بنسخة من البيانات.");
+    });
+
+    document.getElementById("currentYear").textContent =
+      String(new Date().getFullYear());
+
+    updateCategoryFilter();
+    renderApps();
+  </script>
 
 </body>
 </html>
-```
-
-### ماذا تفعل الآن؟
-
-استبدل محتوى `index.html` الموجود في مستودع **amir-store** بهذا الكود، ثم اضغط **Commit changes**.
-
-زر **📲 تثبيت التطبيق** في المتجر يفتح تطبيق **أمير مواقيت**؛ أما نافذة التثبيت الفعلية فتظهر من داخل التطبيق عندما يكون PWA مستوفيًا لشروط المتصفح.
