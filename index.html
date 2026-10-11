@@ -1384,14 +1384,12 @@ const provider = new GoogleAuthProvider();
 
 const box = document.createElement("div");
 
+
 box.style.cssText =
-  "position:fixed;top:15px;left:15px;z-index:99999;" +
-  "background:rgba(255,255,255,.97);" +
-  "padding:9px 13px;border:1px solid #e5e8ef;" +
-  "border-radius:14px;" +
-  "box-shadow:0 6px 22px rgba(28,35,67,.10);" +
-  "display:flex;gap:10px;align-items:center;" +
-  "max-width:95vw;font-family:Arial,Tahoma,sans-serif;";
+  "position:static;display:flex;align-items:center;" +
+  "gap:8px;margin-inline-start:16px;padding:0;" +
+  "background:transparent;border:0;box-shadow:none;" +
+  "z-index:auto;max-width:100%;";
 
 
 const login = document.createElement("button");
@@ -1425,8 +1423,16 @@ logout.style.cssText =
   "font-family:inherit;font-size:13px;font-weight:700;" +
   "transition:all .2s ease;";
 
+
 box.append(login, status, logout);
-document.body.appendChild(box);
+
+const topbar = document.querySelector(".topbar .container.nav");
+if (topbar) {
+  topbar.appendChild(box);
+} else {
+  document.body.appendChild(box);
+}
+
 
 login.onclick = async () => {
   login.disabled = true;
