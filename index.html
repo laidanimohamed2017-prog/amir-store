@@ -1391,9 +1391,15 @@ box.style.cssText =
 
 const login = document.createElement("button");
 login.textContent = "تسجيل الدخول باستخدام Google";
+
 login.style.cssText =
-  "padding:10px 14px;border:0;border-radius:8px;" +
-  "background:#6558e8;color:white;cursor:pointer;";
+  "padding:10px 16px;border:0;border-radius:12px;" +
+  "background:linear-gradient(135deg,#6558e8,#5145d1);" +
+  "color:white;cursor:pointer;font-family:inherit;" +
+  "font-size:14px;font-weight:700;" +
+  "box-shadow:0 5px 14px rgba(101,88,232,.22);" +
+  "transition:all .2s ease;";
+
 
 const status = document.createElement("span");
 status.textContent = "غير مسجل الدخول";
@@ -1401,8 +1407,13 @@ status.style.cssText = "font-size:12px;";
 
 const logout = document.createElement("button");
 logout.textContent = "خروج";
+
 logout.style.cssText =
-  "padding:8px;border:1px solid #ddd;border-radius:8px;";
+  "padding:9px 14px;border:1px solid #e5e2ff;" +
+  "border-radius:12px;background:#f5f3ff;" +
+  "color:#5145d1;cursor:pointer;" +
+  "font-family:inherit;font-size:13px;font-weight:700;" +
+  "transition:all .2s ease;";
 
 box.append(login, status, logout);
 document.body.appendChild(box);
