@@ -1426,14 +1426,31 @@ logout.onclick = async () => {
   }
 };
 
+
 onAuthStateChanged(auth, user => {
-  status.textContent = user
-    ? "مرحبًا، " + (user.displayName || user.email)
-    : "غير مسجل الدخول";
+  status.replaceChildren();
+
+  if (user) {
+    if (user.photoURL) {
+      const photo = document.createElement("img");
+      photo.src = user.photoURL;
+      photo.alt = "صورة حساب Google";
+      photo.style.cssText =
+        "width:32px;height:32px;border-radius:50%;vertical-align:middle;margin-left:8px;";
+      status.appendChild(photo);
+    }
+
+    const name = document.createElement("span");
+    name.textContent = "مرحبًا، " + (user.displayName || user.email);
+    status.appendChild(name);
+  } else {
+    status.textContent = "غير مسجل الدخول";
+  }
 
   login.hidden = !!user;
   logout.hidden = !user;
 });
+
 </script>
 </body>
 </html>
