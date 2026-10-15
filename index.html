@@ -809,8 +809,20 @@
         font-size: 12px;
       }
 
+      .app-actions {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+      }
+
       .app-actions .button {
-        flex: 1 1 100%;
+        flex: 0 1 auto;
+        width: auto;
+        max-width: 100%;
+        white-space: nowrap;
       }
 
       .developer-section {
