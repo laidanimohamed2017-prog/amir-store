@@ -170,6 +170,70 @@
       color: var(--green);
     }
 
+    /* Google account controls: keep them aligned in the header */
+    .amir-auth-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      flex: 0 1 auto;
+      min-width: 0;
+      margin-inline-start: 0;
+    }
+
+    .amir-auth-login,
+    .amir-auth-logout {
+      white-space: nowrap;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .amir-auth-login {
+      padding: 9px 12px;
+      border: 1px solid rgba(56,229,160,.28);
+      background: rgba(56,229,160,.10);
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .amir-auth-login:hover {
+      background: rgba(56,229,160,.18);
+      transform: translateY(-1px);
+    }
+
+    .amir-auth-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+      max-width: 180px;
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .amir-auth-status img {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      border-radius: 50%;
+    }
+
+    .amir-auth-logout {
+      padding: 8px 11px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .amir-auth-logout:hover {
+      background: rgba(255,255,255,.10);
+    }
+
     .button {
       border: 1px solid transparent;
       border-radius: 13px;
@@ -647,6 +711,22 @@
       .nav {
         min-height: 68px;
         gap: 8px;
+      }
+
+      .amir-auth-controls {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        padding: 0 0 10px;
+      }
+
+      .amir-auth-status {
+        max-width: 150px;
+      }
+
+      .amir-auth-login {
+        font-size: 11px;
+        padding: 8px 10px;
       }
 
       .brand-icon {
@@ -1383,46 +1463,22 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 const box = document.createElement("div");
-
-
-box.style.cssText =
-  "position:static;display:flex;align-items:center;" +
-  "gap:8px;margin-inline-start:16px;padding:0;" +
-  "background:transparent;border:0;box-shadow:none;" +
-  "z-index:auto;max-width:100%;";
-
+box.className = "amir-auth-controls";
 
 const login = document.createElement("button");
-login.textContent = "تسجيل الدخول باستخدام Google";
-
-login.style.cssText =
-  "padding:10px 16px;border:0;border-radius:12px;" +
-  "background:linear-gradient(135deg,#6558e8,#5145d1);" +
-  "color:white;cursor:pointer;font-family:inherit;" +
-  "font-size:14px;font-weight:700;" +
-  "box-shadow:0 5px 14px rgba(101,88,232,.22);" +
-  "transition:all .2s ease;";
-
+login.className = "amir-auth-login";
+login.type = "button";
+login.textContent = "دخول Google";
+login.setAttribute("aria-label", "تسجيل الدخول باستخدام Google");
 
 const status = document.createElement("span");
+status.className = "amir-auth-status";
 status.textContent = "غير مسجل الدخول";
 
-status.style.cssText =
-  "display:flex;align-items:center;gap:8px;" +
-  "font-size:14px;font-weight:700;color:#172033;" +
-  "max-width:220px;overflow-wrap:anywhere;";
-
-
 const logout = document.createElement("button");
+logout.className = "amir-auth-logout";
+logout.type = "button";
 logout.textContent = "خروج";
-
-logout.style.cssText =
-  "padding:9px 14px;border:1px solid #e5e2ff;" +
-  "border-radius:12px;background:#f5f3ff;" +
-  "color:#5145d1;cursor:pointer;" +
-  "font-family:inherit;font-size:13px;font-weight:700;" +
-  "transition:all .2s ease;";
-
 
 box.append(login, status, logout);
 
